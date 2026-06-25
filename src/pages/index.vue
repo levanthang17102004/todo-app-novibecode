@@ -2,26 +2,48 @@
 import { ref } from "vue";
 
 interface Task{
-    id: number
+    _id: number
     title: string
     completed: boolean
 }
 
-const tasks = ref<task[]>([])
+const {
+  data:tasks,
+  refresh
+}= await useFetch('/api/tasks')
 
-const addTask = (title: string) => {
+const addTask = async (title: string) => {
+  await $fetch('/api/tasks', {
+    method: 'POST',
+    body: {
+      title
+    }
+  })
 
-    tasks.value.push({
-        id: Date.now(),
-        title,
-        completed:false
-    })
+  refresh()
 }
 
-const deleteTask = (id: number) => {
-  tasks.value = tasks.value.filter(
-    task => task.id !== id
-  )
+const deleteTask = async (id: string) => {
+  await $fetch(`/api/tasks/${id}`, {
+    method: 'DELETE'
+  })
+
+  refresh()
+}
+
+const toggleTask =async(
+  id:string,
+  completed:boolean
+)=>{
+  await $fetch('/api/tasks/${id}',{
+    method:'PATCH',
+    body:{
+      completed: !completed
+    }
+  })
+
+refresh()
+
 }
 
 </script>
@@ -42,9 +64,10 @@ const deleteTask = (id: number) => {
 <ul>
   <TaskItem
     v-for="task in tasks"
-    :key="task.id"
+    :key="task._id"
     :task="task"
     @delete="deleteTask"
+    @toggle="toggleTask"
   />
 </ul>
 </div>

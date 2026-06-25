@@ -15,7 +15,7 @@ const emit = defineEmits<{
 <template>
     <li>
         {{task.title}}
-        <button @click="emit('delete', task.id)">
+        <button @click="emit('delete', task._id)">
             Xoa
         </button>
     </li>
