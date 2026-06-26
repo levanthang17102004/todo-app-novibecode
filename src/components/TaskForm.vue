@@ -1,10 +1,12 @@
 <script setup lang="ts">
-const taskName = ref('')
+import {ref} from 'vue';
 
+
+const taskName = ref('')
 const emit = defineEmits<{add: [title: string]}>()
 
 const handleAdd=()=>{
-    if (!taskName.value.strim()) return
+    if (!taskName.value.trim()) return
 
     emit('add', taskName.value)
 
