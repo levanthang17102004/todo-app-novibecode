@@ -6,6 +6,11 @@ export default defineNuxtConfig({
     srcDir: '.' 
   },
 
+modules: [
+    '@nuxt/ui',
+    '@pinia/nuxt'
+  ],
+
   runtimeConfig: {
     mongoUri: process.env.MONGO_URI
   }

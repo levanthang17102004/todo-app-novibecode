@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
     id,
     body,
     {
-      new: true
+      returnDocument: 'after' 
     }
   )
 })
